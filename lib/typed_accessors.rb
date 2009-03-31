@@ -23,8 +23,12 @@ class Class
         attr_reader( *symbols )
         bool_yn_writer( *symbols )
     end
-
     
+    # Creates a boolean reader for symmetry with bool_yn_accessor & bool_yn_writer
+    def bool_yn_reader( *symbols )
+        attr_reader( *symbols )
+    end
+
     # Creates a float accessor, using built in .to_f functions on
     # objects.  Any object that has a .to_f is supported.
     def float_accessor( *symbols )
@@ -32,6 +36,11 @@ class Class
         float_writer( *symbols )
     end
     
+    # Creates a float reader for symmetry with float_accessor & float_writer
+    def float_reader( *symbols )
+        attr_reader( *symbols )
+    end
+
     # Creates an int accessor, using built in .to_i functions on
     # objects.  Any object that has a .to_i is supported.
     def int_accessor( *symbols )
@@ -39,15 +48,25 @@ class Class
         int_writer( *symbols )
     end
     
-    # Creates a data accessor using the Date parse function on
+    # Creates a int reader for symmetry with int_accessor & int_writer
+    def int_reader( *symbols )
+        attr_reader( *symbols )
+    end
+
+    # Creates a date accessor using the Date parse function on
     # strings.  Not defined for other input types.
     def date_accessor( *symbols )
         attr_reader( *symbols )
         date_writer( *symbols )
     end
 
-    private
-    
+    # Creates a date reader for symmetry with date_accessor & date_writer
+    def date_reader( *symbols )
+        attr_reader( *symbols )
+    end
+
+    # Creates a date writer using the Date parse function on
+    # strings.  Not defined for other input types.
     def date_writer( *symbols )
         symbols.each do |symbol|
             class_eval(<<-EOS, __FILE__, __LINE__)
@@ -62,6 +81,9 @@ class Class
         end
     end
     
+    # Creates a boolean writer.  It will convert and incoming string
+    # to a true / false value.  If the string is "y" or "yes" it will be
+    # true, otherwise false.
     def bool_yn_writer( *symbols )
         symbols.each do |symbol|
             class_eval(<<-EOS, __FILE__, __LINE__)
@@ -76,6 +98,8 @@ class Class
         end
     end
         
+    # Creates a float writer, using built in .to_f functions on
+    # objects.  Any object that has a .to_f is supported.
     def float_writer( *symbols )
         symbols.each do |symbol|
             class_eval(<<-EOS, __FILE__, __LINE__)
@@ -87,6 +111,8 @@ class Class
         end
     end
 
+    # Creates an int writer, using built in .to_i functions on
+    # objects.  Any object that has a .to_i is supported.
     def int_writer( *symbols )
         symbols.each do |symbol|
             class_eval(<<-EOS, __FILE__, __LINE__)
